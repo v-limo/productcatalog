@@ -1,0 +1,35 @@
+<div class="banner-main-container">
+  <div class="banner-container">
+    <span>Canter Oy</span>
+    <h1>Product Editor</h1>
+  </div>
+</div>
+<div class="form-main-container">
+  <div class="form-fields-container">
+    <div class="form-heading-container">
+      <h1>Product List</h1>
+    </div>
+    <div class="form-group-container">
+      <table>
+        <tr>
+          <th>Code</th>
+          <th>Category</th>
+          <th>Name</th>
+          <th>Price</th>
+        </tr>
+        <tr *ngFor="let element of dataSource">
+          <td>{{ element.code }}</td>
+          <td>{{ element.category }}</td>
+          <td>{{ element.name }}</td>
+          <td>{{ element.price }}</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="onEdit(element)">Edit</button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" style="background-color: red; border-color: red;" (click)="onDelete(element.id)">Delete</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
