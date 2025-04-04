@@ -2,7 +2,7 @@ package repositories
 
 import models.Product
 
-import javax.inject.Singleton
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 trait IProductRepository {
@@ -18,7 +18,8 @@ trait IProductRepository {
 }
 
 @Singleton
-class ProductRepository()(implicit ec: ExecutionContext) extends IProductRepository {
+class ProductRepository @Inject()()(implicit ec: ExecutionContext)
+	extends IProductRepository {
 	
 	private var products: List[Product] = List(
 		Product(1, "Laptop", "Electronics", "LAP123", 1200.00, List()),
