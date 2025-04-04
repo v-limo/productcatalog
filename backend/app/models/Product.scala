@@ -2,10 +2,7 @@ package models
 
 import play.api.libs.json._
 
-case class ProductDetail(
-	key: String,
-	value: String
-)
+case class ProductDetail(key: String, value: String)
 
 case class Product(
 	                  id: Long,
@@ -18,12 +15,8 @@ case class Product(
 
 object Product {
 	implicit val format: OFormat[Product] = Json.format[Product]
-	
-	// TODO: add validation  	
 }
 
 object ProductDetail {
 	implicit val format: OFormat[ProductDetail] = Json.format[ProductDetail]
-	
-	// TODO: add validation  	
 }
