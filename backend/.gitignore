@@ -10,4 +10,5 @@ target
 /.settings
 /RUNNING_PID
 /project/.bloop/
-/project/project/.bloop
+.bloop/backend-build.json
+project/.bloop/backend-build-build.jsonct/.bloop
