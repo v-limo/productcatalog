@@ -20,7 +20,7 @@ trait IProductService {
 
 
 @Singleton
-class ProductService @Inject()(productRepository: IProductRepository)(implicit ec: ExecutionContext) extends IProductService {
+class ProductService @Inject()(productRepository: ProductRepository)(implicit ec: ExecutionContext) extends IProductService {
 	override def listProducts(): Future[List[Product]] = {
 		productRepository.list()
 	}
