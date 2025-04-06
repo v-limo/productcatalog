@@ -1,4 +1,4 @@
-name := """backend-project"""
+name := "backend-project"
 organization := "com.example"
 
 version := "1.0-SNAPSHOT"
@@ -7,18 +7,13 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.13.16"
 
-libraryDependencies += guice
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
-
 libraryDependencies ++= Seq(
 	guice,
-	"com.typesafe.slick" %% "slick" % "3.6.0",
-	"com.typesafe.play" %% "play-slick" % "5.3.1",
-	"com.typesafe.play" %% "play-slick-evolutions" % "5.3.1",
+	"org.playframework" %% "play-slick" % "6.1.0",
+	"org.playframework" %% "play-slick-evolutions" % "6.1.0",
+	"com.typesafe.slick" %% "slick-hikaricp" % "3.5.0",
 	"org.postgresql" % "postgresql" % "42.7.5",
-	"com.typesafe.slick" %% "slick-hikaricp" % "3.6.0",
 	"org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
 )
-
 
 ThisBuild / useSuperShell := false

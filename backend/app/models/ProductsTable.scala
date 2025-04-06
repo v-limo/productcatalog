@@ -8,7 +8,7 @@ import slick.lifted.{ProvenShape, Tag}
 import javax.inject.Inject
 
 trait ProductsTable extends HasDatabaseConfigProvider[JdbcProfile] {
-	@Inject() protected def dbConfigProvider: DatabaseConfigProvider
+	@Inject() protected val dbConfigProvider: DatabaseConfigProvider
 	
 	class Products(tag: Tag) extends Table[Product](tag, "product") {
 		def id: Rep[Long] = column[Long]("id", O.PrimaryKey, O.AutoInc)
