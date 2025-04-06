@@ -62,10 +62,15 @@ class ProductController @Inject()(val controllerComponents: ControllerComponents
 					val validationResult: JsResult[Product] = json.validate[Product]
 					validationResult match {
 						case JsSuccess(value, path) =>
-							val future: Future[Option[Product]] = productService.updateProduct(id, value)
-							future.map {
-								case Some(updatedProduct) => Ok(Json.toJson(updatedProduct))
-								case None => NotFound(Json.obj("message" -> s"Product with the id $id not found "))
+							if (value.id != id)
+								Future.successful(BadRequest(
+									Json.obj("message" -> "id in the body should match that in the request path")))
+							else {
+								val future: Future[Option[Product]] = productService.updateProduct(id, value)
+								future.map {
+									case Some(updatedProduct) => Ok(Json.toJson(updatedProduct))
+									case None => NotFound(Json.obj("message" -> s"Product with the id $id not found "))
+								}
 							}
 						case JsError(errors) => Future.successful(BadRequest(Json.toJson(JsError.toJson(errors))))
 					}

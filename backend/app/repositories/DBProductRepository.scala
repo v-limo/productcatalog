@@ -17,10 +17,6 @@ class DBProductRepository @Inject()(protected val dbConfigProvider: DatabaseConf
 	
 	def list(): Future[List[Product]] = db.run(products.result.map(_.toList))
 	
-	def getOne(id: Long): Future[Option[Product]] = db.run {
-		products.filter(_.id === id).result.headOption
-	}
-	
 	def create(product: Product): Future[Product] = {
 		db.run((products returning products.map(_.id)) += product)
 			.map(newId => product.copy(id = newId))
@@ -32,6 +28,10 @@ class DBProductRepository @Inject()(protected val dbConfigProvider: DatabaseConf
 			if (rowsUpdated > 0) getOne(id)
 			else Future.successful(None)
 		})
+	}
+	
+	def getOne(id: Long): Future[Option[Product]] = db.run {
+		products.filter(_.id === id).result.headOption
 	}
 	
 	def delete(id: Long): Future[Boolean] = db.run {

@@ -10,7 +10,7 @@ case class Product(
 	                  category: String,
 	                  code: String,
 	                  price: BigDecimal,
-//	                  details: List[ProductDetail] = List.empty
+	                  details: Option[List[ProductDetail]] = Option(List.empty)
                   )
 
 object Product {

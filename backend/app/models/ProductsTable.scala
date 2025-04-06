@@ -1,33 +1,38 @@
 package models
 
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
+import play.api.libs.json.Json
 import slick.jdbc.JdbcProfile
-import slick.jdbc.PostgresProfile.api._
-import slick.lifted.{ProvenShape, Tag}
+import slick.lifted.ProvenShape
 
 import javax.inject.Inject
 
 trait ProductsTable extends HasDatabaseConfigProvider[JdbcProfile] {
+	val products: TableQuery[Products] = TableQuery[Products]
+	
+	import profile.api._
+	
+	implicit val productDetailListColumnType = {
+		MappedColumnType.base[List[ProductDetail], String](
+			list => Json.stringify(Json.toJson(list)),
+			jsonString => Json.parse(jsonString).as[List[ProductDetail]])
+	}
 	@Inject() protected val dbConfigProvider: DatabaseConfigProvider
 	
-	class Products(tag: Tag) extends Table[Product](tag, "product") {
+	class Products(tag: Tag) extends Table[Product](tag, _tableName = "product") {
+		
+		override def * : ProvenShape[Product] = (id, name, category, code, price, details) <> ((Product.apply _).tupled, Product.unapply)
+		
 		def id: Rep[Long] = column[Long]("id", O.PrimaryKey, O.AutoInc)
 		
-		def name: Rep[String] = column[String]("name")
+		private def name: Rep[String] = column[String]("name")
 		
-		def category: Rep[String] = column[String]("category")
+		private def category: Rep[String] = column[String]("category")
 		
-		def code: Rep[String] = column[String]("code")
+		private def code: Rep[String] = column[String]("code")
 		
-		def price: Rep[BigDecimal] = column[BigDecimal]("price")
+		private def price: Rep[BigDecimal] = column[BigDecimal]("price")
 		
-		// TODO: add this colymn 
-		// def details: Rep[List[ProductDetail]] = column[List[ProductDetail]] ("details")
-		
-		// https://shorturl.at/H7mxj
-		override def * : ProvenShape[Product] = (id, name, category, code, price) <> ((Product.apply _).tupled, Product.unapply)
+		private def details: Rep[Option[List[ProductDetail]]] = column[Option[List[ProductDetail]]]("details")
 	}
-	
-	val products: TableQuery[Products] = TableQuery[Products]
 }
-	

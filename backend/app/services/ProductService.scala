@@ -34,6 +34,7 @@ class ProductService @Inject()(productRepository: ProductRepository)(implicit ec
 	}
 	
 	override def updateProduct(id: Long, product: Product): Future[Option[Product]] = {
+		// TODO: update ony columns/fields with values - needs a Dto	
 		productRepository.update(id, product)
 	}
 	
