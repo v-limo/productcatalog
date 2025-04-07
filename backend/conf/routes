@@ -1,3 +1,14 @@
 # Routes
 
-GET        /        controllers.ProductController.health()
+# for testing
+
+GET / controllers.ProductController.list
+GET /health controllers.ProductController.health
+
+# Product CRUD operations
+
+GET /products controllers.ProductController.list
+GET /products/:id controllers.ProductController.get(id: Long)
+POST /products controllers.ProductController.create
+PUT /products/:id controllers.ProductController.update(id: Long)
+DELETE /products/:id controllers.ProductController.delete(id: Long)

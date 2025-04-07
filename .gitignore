@@ -38,3 +38,10 @@ e2e/*.map
 
 # System Files
 .DS_Store/
+backend/project/.bloop/
+backend/project/project/.bloop/*
+backend/project/project/.bloop/backend-build-build.json
+backend/project/metals.sbt
+backend/project/.bloop/backend-build.json
+backend/project/project/.bloop/backend-build-build.json
+backend/project/project/.bloop/backend-build-build.json
