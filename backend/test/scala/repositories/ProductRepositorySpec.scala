@@ -18,7 +18,8 @@
 //import scala.language.postfixOps
 //
 //// TODO: Fix the issue with 'class required but found T' ??
-//class DBProductRepositorySpec extends PlaySpec with Injecting with HasApp with BeforeAndAfterEach {
+//// Bug: needs to be fixed!!!  
+//class ProductRepositorySpec extends PlaySpec with Injecting with HasApp with BeforeAndAfterEach {
 //	
 //	def application: Application = new GuiceApplicationBuilder().build()
 //	
