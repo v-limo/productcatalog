@@ -16,4 +16,7 @@ libraryDependencies ++= Seq(
 	"org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
 )
 
+libraryDependencies += "org.scalatestplus" %% "mockito-4-6" % "3.2.18.0" % Test
+libraryDependencies += "com.h2database" % "h2" % "2.3.232" % Test
+
 ThisBuild / useSuperShell := false

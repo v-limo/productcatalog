@@ -6,14 +6,11 @@ import services._
 
 class AppModule extends AbstractModule {
 	override def configure(): Unit = {
-		// DI for in memory list 	
-		//		bind(classOf[ProductRepository])
-		//			.to(classOf[ListProductRepository])
-		
 		//		 DI for database 	
-		bind(classOf[ProductRepository])
+		bind(classOf[IProductRepository])
 			.to(classOf[DBProductRepository])
 		
+		//		 DI for business layer 	
 		bind(classOf[IProductService])
 			.to(classOf[ProductService])
 	}

@@ -7,19 +7,31 @@ import slick.jdbc.JdbcProfile
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
+trait IProductRepository {
+	def list(): Future[List[Product]]
+	
+	def getOne(id: Long): Future[Option[Product]]
+	
+	def create(product: Product): Future[Product]
+	
+	def update(id: Long, product: Product): Future[Option[Product]]
+	
+	def delete(id: Long): Future[Boolean]
+}
+
 @Singleton
 class DBProductRepository @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext)
 	extends HasDatabaseConfigProvider[JdbcProfile]
-		with ProductRepository
-		with ProductsTable {
+		with IProductRepository with ProductsTable {
 	
 	import profile.api._
 	
 	def list(): Future[List[Product]] = db.run(products.result.map(_.toList))
 	
 	def create(product: Product): Future[Product] = {
-		db.run((products returning products.map(_.id)) += product)
-			.map(newId => product.copy(id = newId))
+		val eventualLong: Future[Long] = db.run((products returning products.map(_.id)) += product)
+		val productFuture: Future[Product] = eventualLong.map(newId => product.copy(id = newId))
+		productFuture
 	}
 	
 	def update(id: Long, product: Product): Future[Option[Product]] = {
