@@ -1,25 +1,12 @@
 version: "3.9"
 
 services:
-  api:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "9000:9000"
-    environment:
-      - DATABASE_URL=postgresql://product_user:product_pass@postgres:5432/product_db
-    depends_on:
-      - postgres
-
   web:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "4200:4200"
-    environment:
-      - API_BASE_URL= todo
     depends_on:
       - api
   postgres:

@@ -19,9 +19,11 @@ export class ProductListComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  ngOnInit = () => this.getData().subscribe((response) => {
-    this.dataSource = response;
-  });
+  ngOnInit() {
+    this.getData().subscribe((response) => {
+      this.dataSource = response;
+    });
+  }
 
   getData(): Observable<IProductType[]> {
     const headers = new HttpHeaders({'Access-Control-Allow-Origin': '*'});
