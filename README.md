@@ -69,12 +69,12 @@ npm start
 ```json
 {
   "id": 32123,
-  "name": "CanterBook ÜberPro",
+  "name": "Book ÜberPro",
   "category": "laptops",
-  "code": "123",
+  "code": "B12945",
   "price": 12.13,
   "details": [
-    { "key": "Cpu", "value": "16 core, Adeona processor" },
+    { "key": "Cpu", "value": "16 core" },
     { "key": "Display", "value": "Yes" }
   ]
 }
