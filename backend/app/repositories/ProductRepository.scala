@@ -12,7 +12,7 @@ trait IProductRepository {
 	
 	def getOne(id: Long): Future[Option[Product]]
 	
-	def create(product: Product): Future[Product]
+	def create(product: CreateProductDto): Future[Product]
 	
 	def update(id: Long, product: Product): Future[Option[Product]]
 	
@@ -20,7 +20,7 @@ trait IProductRepository {
 }
 
 @Singleton
-class DBProductRepository @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext)
+class ProductRepository @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext)
 	extends HasDatabaseConfigProvider[JdbcProfile]
 		with IProductRepository with ProductsTable {
 	
@@ -28,9 +28,17 @@ class DBProductRepository @Inject()(protected val dbConfigProvider: DatabaseConf
 	
 	def list(): Future[List[Product]] = db.run(products.result.map(_.toList))
 	
-	def create(product: Product): Future[Product] = {
-		val eventualLong: Future[Long] = db.run((products returning products.map(_.id)) += product)
-		val productFuture: Future[Product] = eventualLong.map(newId => product.copy(id = newId))
+	def create(product: CreateProductDto): Future[Product] = {
+		val productToInsert: Product = Product(
+			id = Long.MaxValue, // will be replace by the db so it is okay for now,
+			name = product.name,
+			category = product.category,
+			code = product.code,
+			price = product.price,
+			details = product.details,
+		)
+		val eventualLong: Future[Long] = db.run((products returning products.map(_.id)) += productToInsert)
+		val productFuture: Future[Product] = eventualLong.map(newId => productToInsert.copy(id = newId))
 		productFuture
 	}
 	

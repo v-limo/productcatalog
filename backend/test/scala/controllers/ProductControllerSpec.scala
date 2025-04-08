@@ -1,7 +1,7 @@
 package scala.controllers
 
 import controllers.ProductController
-import models.{Product, ProductDetail}
+import models.{CreateProductDto, Product, ProductDetail}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
@@ -32,8 +32,16 @@ class ProductControllerSpec extends PlaySpec with MockitoSugar {
 		Option(List(ProductDetail("Cpu", "16 core")))
 	)
 	
-	val newProduct: Product = product2.copy(id = 3L, name = "Product 3", code = "333")
-	val createdProduct: Product = newProduct.copy(id = 3L)
+	val newProduct: CreateProductDto = CreateProductDto(
+		"Product 1", "laptops", "222", BigDecimal(12.14),
+		Option(List(ProductDetail("Cpu", "16 core")))
+	)
+	
+	val createdProduct: Product = Product(
+		id = 3L, "Product 1", "laptops", "222", BigDecimal(12.14),
+		Option(List(ProductDetail("Cpu", "16 core")))
+	)
+	
 	val updatedProduct: Product = product1.copy(name = "Updated Product 1")
 	
 	"Product controller" should {

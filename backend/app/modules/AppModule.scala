@@ -8,7 +8,7 @@ class AppModule extends AbstractModule {
 	override def configure(): Unit = {
 		//		 DI for database 	
 		bind(classOf[IProductRepository])
-			.to(classOf[DBProductRepository])
+			.to(classOf[ProductRepository])
 		
 		//		 DI for business layer 	
 		bind(classOf[IProductService])
