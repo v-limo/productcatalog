@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://skivvy.herokuapp.com/products/';
+export const BASE_URL = 'http://localhost:9000/products/';

@@ -9,6 +9,10 @@ import javax.inject.Inject
 
 case class ProductDetail(key: String, value: String)
 
+object ProductDetail {
+	implicit val format: OFormat[ProductDetail] = Json.format[ProductDetail]
+}
+
 case class Product(
 	                  id: Long,
 	                  name: String,
@@ -22,12 +26,20 @@ object Product {
 	implicit val format: OFormat[Product] = Json.format[Product]
 }
 
-object ProductDetail {
-	implicit val format: OFormat[ProductDetail] = Json.format[ProductDetail]
+case class CreateProductDto(
+	                           name: String,
+	                           category: String,
+	                           code: String,
+	                           price: BigDecimal,
+	                           details: Option[List[ProductDetail]] = Option(List.empty)
+                           )
+
+object CreateProductDto {
+	implicit val format: OFormat[CreateProductDto] = Json.format[CreateProductDto]
 }
 
-
 trait ProductsTable extends HasDatabaseConfigProvider[JdbcProfile] {
+	
 	val products: TableQuery[Products] = TableQuery[Products]
 	
 	import profile.api._
@@ -37,6 +49,7 @@ trait ProductsTable extends HasDatabaseConfigProvider[JdbcProfile] {
 			list => Json.stringify(Json.toJson(list)),
 			jsonString => Json.parse(jsonString).as[List[ProductDetail]])
 	}
+	
 	@Inject() protected val dbConfigProvider: DatabaseConfigProvider
 	
 	class Products(tag: Tag) extends Table[Product](tag, _tableName = "product") {

@@ -11,7 +11,7 @@ trait IProductService {
 	
 	def getProduct(id: Long): Future[Option[Product]]
 	
-	def createProduct(product: Product): Future[Product]
+	def createProduct(createDto: CreateProductDto): Future[Product]
 	
 	def updateProduct(id: Long, product: Product): Future[Option[Product]]
 	
@@ -29,8 +29,8 @@ class ProductService @Inject()(productRepository: IProductRepository)(implicit e
 		productRepository.getOne(id)
 	}
 	
-	override def createProduct(product: Product): Future[Product] = {
-		productRepository.create(product)
+	override def createProduct(createDto: CreateProductDto): Future[Product] = {
+		productRepository.create(createDto)
 	}
 	
 	override def updateProduct(id: Long, product: Product): Future[Option[Product]] = {

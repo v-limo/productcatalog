@@ -15,7 +15,10 @@ class ProductController @Inject()(val controllerComponents: ControllerComponents
 	
 	def health(): Action[AnyContent] = Action.async {
 		implicit request: Request[AnyContent] =>
-			Future.successful(Ok("All is working well"))
+			Future.successful(Ok(Json.obj(
+				"message" -> "All is working well",
+				"available endpoints" -> List(" GET      /", " GEt      /products", " POST     /products/:id", " PUT      /products/:id", " DELETe   /products/:id")))
+			)
 	}
 	
 	def list(): Action[AnyContent] = Action.async {
@@ -41,7 +44,7 @@ class ProductController @Inject()(val controllerComponents: ControllerComponents
 			
 			jsonOption match {
 				case Some(json) =>
-					val validResults = json.validate[Product]
+					val validResults = json.validate[CreateProductDto]
 					validResults match {
 						case JsSuccess(value, path) =>
 							val createdProduct = productService.createProduct(value)
