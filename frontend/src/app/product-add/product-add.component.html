@@ -12,41 +12,44 @@
     <div class="form-group-container">
       <div class="form-main">
         <div class="image-container">
-          <img src="/assets/form.png" />
+          <img src="/assets/form.png" alt="form image, a laptop photo"/>
         </div>
         <div class="form-input-container">
+
           <form class="example-form" [formGroup]="productForm">
-            <div class="input-grid-group" style="display: 'inline-block';">
+            <div class="input-grid-group" style="display: inline-block">
               <div class="row1">
                 <div class="col1">
-                  <span>Name</span>
+                  <label for="name">Name</label>
                 </div>
                 <div class="col2">
-                  <input type="text" class="col2-input" placeholder="Canterbook Uberpro" name="name"
-                    formControlName="name" width="0" height="0" />
+                  <input type="text" id="name" class="col2-input" placeholder="Canterbook Uberpro" name="name"
+                         formControlName="name" width="0" height="0"/>
                 </div>
               </div>
 
               <div class="row1">
                 <div class="col1">
-                  <span>Category</span>
+                  <label for="category">Category</label>
                 </div>
                 <div class="col2">
-                  <input type="text" class="col2-input" placeholder="Category" name="category" formControlName="category" />
+                  <input type="text" id="category" class="col2-input" placeholder="Category" name="category"
+                         formControlName="category"/>
                 </div>
               </div>
 
               <div class="row1">
                 <div class="col1">
-                  <span>Code</span>
+                  <label for="code">Code</label>
                 </div>
                 <div class="col3">
                   <div>
-                    <input type="text" class="col2-input" placeholder="Code" id="code" formControlName="code" />
+                    <input type="text" class="col2-input" placeholder="Code" id="code" formControlName="code"/>
                   </div>
                   <div class="row1">
-                    <span>Price</span>
-                    <input type="text" class="col2-input" placeholder="Price" name="price" formControlName="price" />
+                    <span>  Price </span>
+                    <input type="text" id="price" class="col2-input" placeholder="Price" name="price"
+                           formControlName="price"/>
                   </div>
                 </div>
               </div>
@@ -68,22 +71,23 @@
               <div style="display: flex;">
                 <div class="add-form-container">
                   <div formArrayName="details">
-                    <div *ngFor="let control of $any(productForm.get('details')).controls; index as i" class="key-value-component" formGroupName="{{i}}">
+                    <div *ngFor="let control of $any(productForm.get('details')).controls; index as i"
+                         class="key-value-component" formGroupName="{{i}}">
                       <input type="text" class="col2-input" formControlName="key" placeholder="Key"
-                        (change)="onChange()" name="key" />
-                      <input type="text" class="col2-input" placeholder="Value" formControlName="value"
-                        (change)="onChange()" name="value" />
+                             (change)="onChange()" name="key"/>
+                      <input id="value" type="text" class="col2-input" placeholder="Value" formControlName="value"
+                             (change)="onChange()" name="value"/>
                     </div>
                   </div>
                 </div>
               </div>
               <button (click)="
                   onClick(productForm.value.key, productForm.value.value)
-                " style="margin-left: 95%;" class="add-icon" [disabled]="disabled">
+                " [disabled]="disabled" class="add-icon" style="margin-left: 95%;">
                 <span>+</span>
               </button>
               <div>
-                <input type="submit" (click)="onSubmit(productForm)" value="Save" />
+                <input type="submit" (click)="onSubmit(productForm)" value="Save"/>
               </div>
             </div>
           </form>

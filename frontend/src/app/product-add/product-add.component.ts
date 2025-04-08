@@ -3,6 +3,7 @@ import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {BASE_URL} from '../APIService';
+import {IProductType} from '../../Mock';
 import {NgForOf} from '@angular/common';
 
 @Component({
@@ -18,12 +19,9 @@ import {NgForOf} from '@angular/common';
 export class ProductAddComponent implements OnInit {
 
   disabled: boolean = false;
-
-  keyValue: Array<Object> = [];
-
   productForm: FormGroup;
+
   formData = {};
-  defaultValue;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     this.productForm = this.formBuilder.group({
@@ -34,22 +32,22 @@ export class ProductAddComponent implements OnInit {
       key: ['', Validators.required],
       value: ['', Validators.required],
       details: this.formBuilder.array([
-          this.formBuilder.group({
-            key: [''],
-            value: ['']
-          })
-      ])
-    })
-    if (this.route.snapshot.params['data'] != null)
-    this.formData =  JSON.parse(this.route.snapshot.params['data']);
-
-}
-  onClick(key, value): void {
-    (this.productForm.get('details') as FormArray).push(
         this.formBuilder.group({
           key: [''],
           value: ['']
         })
+      ])
+    })
+    if (this.route.snapshot.params['data'] != null)
+      this.formData = JSON.parse(this.route.snapshot.params['data']);
+  }
+
+  onClick(key: string, value: string): void {
+    (this.productForm.get('details') as FormArray).push(
+      this.formBuilder.group({
+        key: [''],
+        value: ['']
+      })
     );
   }
 
@@ -57,10 +55,8 @@ export class ProductAddComponent implements OnInit {
     this.disabled = false;
   }
 
-  onSubmit(data): void {
-    console.log('form data 1', this.formData);
-    // console.log('id =', this.formData["id"])
-    const productDetail = {
+  async onSubmit(data: FormGroup) {
+    const productDetail: IProductType = {
       name: data.value.name,
       category: data.value.category,
       code: data.value.code,
@@ -68,33 +64,27 @@ export class ProductAddComponent implements OnInit {
       details: data.value.details,
       id: this.formData['id']
     }
-    console.log('form data 2', productDetail);
-    if(this.formData['id'] == undefined) {
-        this.http.post(`${BASE_URL}`, productDetail).subscribe(
-        (response) => console.log(response),
-        (error) => console.log(error)
-      )
+
+    if (this.formData['id'] == undefined) {
+      this.http.post(`${BASE_URL}`, productDetail)
+        .subscribe({error: console.error})
+    } else {
+      this.http.put(`${BASE_URL}/${this.formData['id']}`, productDetail)
+        .subscribe({error: console.error}
+        )
     }
-    else {
-      this.http.put(`${BASE_URL + this.formData['id']}`, productDetail).subscribe(
-        (response) => console.log(response),
-        (error) => console.log(error)
-      )
-    }
-    this.router.navigate([''])
+    await this.router.navigate([''])
   }
 
   ngOnInit(): void {
-
-    if(this.formData['details'] != null) {
+    if (this.formData['details'] != null) {
       while ((this.productForm.get('details') as any).controls.length < this.formData['details'].length) {
         this.onClick('', '');
       }
     }
 
-    console.log(this.formData)
     if (this.formData != null) {
-        this.productForm.patchValue({
+      this.productForm.patchValue({
         code: this.formData['code'],
         name: this.formData['name'],
         category: this.formData['category'],
@@ -103,7 +93,4 @@ export class ProductAddComponent implements OnInit {
       });
     }
   }
-
 }
-// this.router.routerState.snapshot
-

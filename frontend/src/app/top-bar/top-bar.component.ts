@@ -11,5 +11,4 @@ import {RouterLink} from '@angular/router';
   styleUrl: './top-bar.component.css'
 })
 export class TopBarComponent {
-
 }

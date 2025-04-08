@@ -4,76 +4,59 @@ import {Router} from '@angular/router';
 import {catchError, Observable, of} from 'rxjs';
 import {BASE_URL} from '../APIService';
 import {IProductType} from '../../Mock';
-import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-product-list',
-  imports: [
-    NgForOf
-  ],
+  imports: [],
   templateUrl: './product-list.component.html',
   standalone: true,
-  styleUrl: './product-list.component.css'
+  styleUrl: './product-list.component.css',
 })
 export class ProductListComponent implements OnInit {
-  dataSource: IProductType[]
 
-  constructor(private http: HttpClient, private router: Router) { }
+  dataSource: IProductType[] = [];
 
-  ngOnInit() {
-    return this.getData().subscribe(res => { this.dataSource = res });
+  constructor(private http: HttpClient, private router: Router) {
   }
 
+  ngOnInit = () => this.getData().subscribe((response) => {
+    this.dataSource = response;
+  });
 
   getData(): Observable<IProductType[]> {
-    console.log('fetching')
-    const headers = new HttpHeaders({ 'Access-Control-Allow-Origin': '*' });
-    const response = this.http.get<IProductType[]>(`${BASE_URL}`, {
-      headers: headers
-    })
-      .pipe(
-        catchError
-          (this.handleError<[]>('getData', []))
-      );
-
-    console.log('response= ', response);
-    return response;
+    const headers = new HttpHeaders({'Access-Control-Allow-Origin': '*'});
+    return this.http
+      .get<IProductType[]>(`${BASE_URL}`, {
+        headers: headers,
+      })
+      .pipe(catchError(this.handleError<[]>('getData', [])));
   }
-  private handleError<T>(operation = 'operation', result?: T) {
+
+  private handleError<T>(_operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error('Error is=', error); // log to console instead
+      console.error('Error is=', error);
       return of(result as T);
     };
   }
 
-  onEdit(e) {
-    // console.log('Editing', e);
-    // console.log(JSON.stringify(e));
-    this.router.navigate(['add', { data: JSON.stringify(e) }])
-    // document.getElementById('').values()
-    // console.log(document.getElementById('code'))
+  async onEdit(productToEdit: IProductType): Promise<void> {
+    await this.router.navigate([
+      'add',
+      {data: JSON.stringify(productToEdit)},
+    ]);
   }
 
-  onDelete(e) {
-    console.log('deleting', e)
+  onDelete(id: number): void {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS"
+      'Access-Control-Allow-Methods': 'DELETE, POST, GET, OPTIONS',
     });
 
-    this.http.delete(`${BASE_URL + e}`, {
-      headers: headers
-    }).subscribe(
-      () => {this.getData().subscribe(res => { this.dataSource = res })},
-    )
+    this.http.delete(`${BASE_URL}/${id}`, {headers}).subscribe(() =>
+      this.getData().subscribe((response) => {
+        this.dataSource = response;
+      })
+    );
   }
-
-}
-
-export interface PeriodicElement {
-  category: string;
-  code: number;
-  name: number;
-  price: string;
 }
