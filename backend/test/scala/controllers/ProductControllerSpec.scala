@@ -1,4 +1,9 @@
+//https://www.playframework.com/documentation/3.0.x/ScalaTestingWithScalaTest#Unit-Testing-Controllers
+// this tests are majorly testing happy paths
+// TODO: add test to failed cases ie notfound, badrequests etc 
+
 package scala.controllers
+
 
 import controllers.ProductController
 import models.{CreateProductDto, Product, ProductDetail}
