@@ -17,18 +17,33 @@
           <th>Name</th>
           <th>Price</th>
         </tr>
-        <tr *ngFor="let element of dataSource">
-          <td>{{ element.code }}</td>
-          <td>{{ element.category }}</td>
-          <td>{{ element.name }}</td>
-          <td>{{ element.price }}</td>
-          <td>
-            <button type="button" class="btn btn-primary" (click)="onEdit(element)">Edit</button>
+        @for (element of dataSource; track element.id) {
+          <tr>
+            <td>{{ element.code }}</td>
+            <td>{{ element.category }}</td>
+            <td>{{ element.name }}</td>
+            <td>{{ element.price }}</td>
+            <td>
+              <button
+              type="button"
+              class="btn btn-primary"
+              (click)="onEdit(element)"
+              >
+              Edit
+            </button>
           </td>
           <td>
-            <button type="button" class="btn btn-primary" style="background-color: red; border-color: red;" (click)="onDelete(element.id)">Delete</button>
-          </td>
-        </tr>
+            <button
+            type="button"
+            class="btn btn-primary"
+            style="background-color: red; border-color: red"
+            (click)="onDelete(element.id)"
+            >
+            Delete
+          </button>
+        </td>
+      </tr>
+    }
       </table>
     </div>
   </div>

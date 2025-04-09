@@ -12,9 +12,10 @@
     <div class="form-group-container">
       <div class="form-main">
         <div class="image-container">
-          <img src="/assets/form.png" />
+          <img src="/assets/form.png" alt="form image, a laptop photo"/>
         </div>
         <div class="form-input-container">
+
           <form class="example-form" [formGroup]="productForm">
             <div class="input-grid-group" style="display: 'inline-block';">
               <div class="row1">
@@ -23,30 +24,32 @@
                 </div>
                 <div class="col2">
                   <input type="text" class="col2-input" placeholder="Canterbook Uberpro" name="name"
-                    formControlName="name" width="0" height="0" />
+                         formControlName="name" width="0" height="0" />
                 </div>
               </div>
 
               <div class="row1">
                 <div class="col1">
-                  <span>Category</span>
+                  <label for="category">Category</label>
                 </div>
                 <div class="col2">
-                  <input type="text" class="col2-input" placeholder="Category" name="category" formControlName="category" />
+                  <input type="text" id="category" class="col2-input" placeholder="Category" name="category"
+                         formControlName="category"/>
                 </div>
               </div>
 
               <div class="row1">
                 <div class="col1">
-                  <span>Code</span>
+                  <label for="code">Code</label>
                 </div>
                 <div class="col3">
                   <div>
-                    <input type="text" class="col2-input" placeholder="Code" id="code" formControlName="code" />
+                    <input type="text" class="col2-input" placeholder="Code" id="code" formControlName="code"/>
                   </div>
                   <div class="row1">
-                    <span>Price</span>
-                    <input type="text" class="col2-input" placeholder="Price" name="price" formControlName="price" />
+                    <span>  Price </span>
+                    <input type="text" id="price" class="col2-input" placeholder="Price" name="price"
+                           formControlName="price"/>
                   </div>
                 </div>
               </div>
@@ -70,9 +73,9 @@
                   <div formArrayName="details">
                     <div *ngFor="let control of $any(productForm.get('details')).controls; index as i" class="key-value-component" formGroupName="{{i}}">
                       <input type="text" class="col2-input" formControlName="key" placeholder="Key"
-                        (change)="onChange()" name="key" />
+                             (change)="onChange()" name="key" />
                       <input type="text" class="col2-input" placeholder="Value" formControlName="value"
-                        (change)="onChange()" name="value" />
+                             (change)="onChange()" name="value" />
                     </div>
                   </div>
                 </div>
@@ -93,4 +96,3 @@
     </div>
   </div>
 </div>
-
