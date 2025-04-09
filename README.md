@@ -33,7 +33,7 @@ To run the PostgreSQL database, you can either:
 cd backend
 
 # Make sure the docker is running
-docker compose up
+docker compose up -d
 
 # - Run the backend
 sbt run
