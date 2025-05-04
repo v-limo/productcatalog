@@ -21,27 +21,14 @@ trait IProductService {
 
 @Singleton
 class ProductService @Inject()(productRepository: IProductRepository)(implicit ec: ExecutionContext) extends IProductService {
-	override def listProducts(): Future[List[Product]] = {
-		productRepository.list()
-	}
 	
-	override def getProduct(id: Long): Future[Option[Product]] = {
-		productRepository.getOne(id)
-	}
+	override def listProducts() = productRepository.list()
 	
-	override def createProduct(createDto: CreateProductDto): Future[Product] = {
-		productRepository.create(createDto)
-	}
+	override def getProduct(id: Long) = productRepository.getOne(id)
 	
-	override def updateProduct(id: Long, product: Product): Future[Option[Product]] = {
-		// TODO: update ony columns/fields with values - needs a Dto	
-		productRepository.update(id, product)
-	}
+	override def createProduct(createDto: CreateProductDto) = productRepository.create(createDto)
 	
-	override def deleteProduct(id: Long): Future[Boolean] = {
-		productRepository.delete(id)
-	}
+	override def updateProduct(id: Long, product: Product) = productRepository.update(id, product)
+	
+	override def deleteProduct(id: Long) = productRepository.delete(id)
 }
-
-
-	

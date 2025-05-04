@@ -8,7 +8,6 @@
 //import models.{CreateProductDto, Product}
 //import org.scalatest.BeforeAndAfterEach
 //import org.scalatestplus.play.PlaySpec
-//import play.api.Application
 //import play.api.inject.guice.GuiceApplicationBuilder
 //import play.api.test.Helpers.running
 //import play.api.test.{HasApp, Injecting}
@@ -22,7 +21,7 @@
 //// Bug: needs to be fixed!!!  
 //class ProductRepositorySpec extends PlaySpec with Injecting with HasApp with BeforeAndAfterEach {
 //	
-//	def application: Application = new GuiceApplicationBuilder().build()
+//	def application = new GuiceApplicationBuilder().build()
 //	
 //	implicit val timeout: Duration = 5 seconds
 //	
@@ -49,7 +48,7 @@
 //		}
 //		
 //		"get all products" in running(application) {
-//			val repository: IProductRepository = inject[IProductRepository]
+//			val repository = inject[IProductRepository]
 //			
 //			val product = CreateProductDto("Product 1", "Cat 1", "P1", BigDecimal(10), None)
 //			
@@ -64,9 +63,9 @@
 //			
 //			val product = CreateProductDto("Product 1", "Cat 1", "P1", BigDecimal(10), None)
 //			
-//			val created: Product = Await.result(repository.create(product), timeout)
+//			val created = Await.result(repository.create(product), timeout)
 //			
-//			val found: Option[Product] = Await.result(repository.getOne(created.id), timeout)
+//			val found = Await.result(repository.getOne(created.id), timeout)
 //			
 //			found mustBe Some(created)
 //		}
@@ -78,9 +77,9 @@
 //			
 //			val created = Await.result(repository.create(product), timeout)
 //			
-//			val updatedProduct: Product = created.copy(name = "Updated Product 1", price = BigDecimal(25))
+//			val updatedProduct = created.copy(name = "Updated Product 1", price = BigDecimal(25))
 //			
-//			val updated: Option[Product] = Await.result(repository.update(created.id, updatedProduct), timeout)
+//			val updated = Await.result(repository.update(created.id, updatedProduct), timeout)
 //			
 //			updated.isDefined mustBe true
 //			updated.get.name mustBe "Updated Product 1"
@@ -94,7 +93,7 @@
 //			
 //			Await.result(repository.create(product), timeout)
 //			
-//			val deletionResult: Boolean = Await.result(repository.delete(product.id), timeout)
+//			val deletionResult = Await.result(repository.delete(product.id), timeout)
 //			
 //			deletionResult mustBe true
 //		}
