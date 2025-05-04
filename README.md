@@ -43,11 +43,7 @@ sbt run
 
 ---
 
-- Note: You need to appy migration if this is the first time you are running the application.
-
-  Visit `http://localhost:9000/products` after making sure the backend and the postgres container runs
-
-  <img width="626" alt="image" src="https://github.com/user-attachments/assets/494e2c15-7961-4a28-af97-fc0a20078761" />
+- Note: Any pending migrations will be automatically applied if this is the first time you are running the application.
 
 ---
 
@@ -94,7 +90,3 @@ npm start
   ]
 }
 ```
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
